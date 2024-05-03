@@ -29,10 +29,10 @@ const App = () => {
 
   return (
     <div className="App">
-      <h2>Sentiment Analysis</h2>
+      <h2>Restaurant Review Sentiment Analysis</h2>
       <form onSubmit={handleSubmit}>
         <label>
-          Enter your review:
+          Enter your restaurant review:
           <input value={review} onChange={handleReviewChange} />
         </label>
         <button type="submit">Analyze</button>
