@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Skeleton from "react-loading-skeleton";
 import axios from "axios";
 import "./App.css";
 
@@ -6,13 +7,15 @@ const App = () => {
   const [review, setReview] = useState("");
   const [sentiment, setSentiment] = useState("");
   const [submit, setSubmit] = useState(false);
-
+  const [skeleton, setSkeleton] = useState(false);
   const handleReviewChange = (event) => {
     setReview(event.target.value);
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setSkeleton(true);
+    console.log(skeleton);
     try {
       const response = await axios.post(
         "https://sentiment-analysis-flask-api.onrender.com/predict",
@@ -22,6 +25,7 @@ const App = () => {
       );
       setSentiment(response.data.sentiment);
       setSubmit(true);
+      setSkeleton(false);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -37,12 +41,18 @@ const App = () => {
         </label>
         <button type="submit">Analyze</button>
       </form>
-      {submit && (
-        <p>
-          It appears that the review is{" "}
-          {sentiment ? "unsatisfactory" : "satisfactory"}
-        </p>
-      )}
+      <div>
+        {skeleton ? (
+          <Skeleton />
+        ) : (
+          submit && (
+            <p>
+              It appears that the review is{" "}
+              {sentiment ? "unsatisfactory" : "satisfactory"}
+            </p>
+          )
+        )}
+      </div>
     </div>
   );
 };
