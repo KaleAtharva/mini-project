@@ -17,12 +17,9 @@ const App = () => {
     setSkeleton(true);
     console.log(skeleton);
     try {
-      const response = await axios.post(
-        "https://sentiment-analysis-flask-api.onrender.com/predict",
-        {
-          review: review,
-        }
-      );
+      const response = await axios.post("http://192.168.1.14/predict", {
+        review: review,
+      });
       setSentiment(response.data.sentiment);
       setSubmit(true);
       setSkeleton(false);
